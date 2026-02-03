@@ -1,7 +1,33 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 class GroupAnagrams {
+
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) return false;
+        int[] count = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
+            count[t.charAt(i) - 'a']--;
+        }
+        for (int c : count) {
+            if (c != 0) return false;
+        }
+        return true;
+    }
+
+    /* Runtime efficiency: O(n) based on the sorting of the sorted char array
+    /* Space efficiency: O(1) since the char array is is equal to the string length
+     */
+    boolean isAnagram2(String s, String t) {
+        if (s.length() != t.length()) return false;
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        String sorted = new String(chars);
+        chars = t.toCharArray();
+        Arrays.sort(chars);
+        String sorted2 = new String(chars);
+        return sorted.equals(sorted2);
+    }
 
     private List<List<String>> groupAnagrams(String[] strs) {
         HashMap<String, List<String>> map = new HashMap<>();
@@ -90,11 +116,12 @@ public List<List<Integer>> threeSum(int[] nums) {
     }
     public static void main(String[] args) {
         GroupAnagrams sol = new GroupAnagrams();
-        String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        // System.out.println(sol.groupAnagrams(strs)); 
-        // System.out.println(sol.isPalindrome2("Was it a car or a cat I saw?"));
-        System.out.println(sol.threeSum(new int[] {1,-1,-1,0}));
-        System.out.println(sol.twoSum(new int[] {2,7,11,15}, 9));
+        System.out.println(sol.isAnagram("bbcc", "ccbc"));
+        char[] arr = {'c', 'b', 'a'};
+        arr['b' - 'a']++;
+        for (char c : arr) {
+            System.out.println(c);
+        }
     }
 
 }
