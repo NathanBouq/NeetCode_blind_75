@@ -29,7 +29,7 @@ class GroupAnagrams {
         return sorted.equals(sorted2);
     }
 
-    private List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams(String[] strs) {
         HashMap<String, List<String>> map = new HashMap<>();
         for (String s : strs) {
             char[] charArray = s.toCharArray();
@@ -47,7 +47,7 @@ class GroupAnagrams {
     }
 
     // Palindrome check ignoring non-alphanumeric characters and case
-    private boolean isPalindrome2(String s) {
+    public boolean isPalindrome2(String s) {
        s = s.toLowerCase();
        
        // Use two pointers: one from start, one from end
@@ -114,14 +114,43 @@ public List<List<Integer>> threeSum(int[] nums) {
         }
         return new int[] {};
     }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!map.containsKey(nums[i])) {
+                map.put(nums[i], 1);
+            } else {
+                map.put(nums[i], map.get(nums[i]) + 1);
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
+        }
+        // Create a list of keys sorted by their frequency in descending order
+        List<Integer> sortedKeys = new ArrayList<>(map.keySet());
+        System.out.println(map.keySet());
+        sortedKeys.sort((a, b) -> map.get(b) - map.get(a)); // Sort by frequency in descending order
+        // Return the first k elements
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = sortedKeys.get(i);
+        }
+        System.out.println(Arrays.toString(result));
+        return result;
+    }
+
+
     public static void main(String[] args) {
         GroupAnagrams sol = new GroupAnagrams();
         System.out.println(sol.isAnagram("bbcc", "ccbc"));
         char[] arr = {'c', 'b', 'a'};
-        arr['b' - 'a']++;
+        arr['b' - 'a']++; // Increment the count for 'b' so it becomes c
         for (char c : arr) {
             System.out.println(c);
         }
+        System.out.println(sol.topKFrequent(new int[] {1,1,1,2,2,3}, 2));
     }
 
 }
